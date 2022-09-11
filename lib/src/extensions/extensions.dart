@@ -57,12 +57,52 @@ extension ValidateString on String {
   bool get fromMemory => startsWith('data:image');
 
   bool get isAllEmoji {
-    for (String s in EmojiParser().unemojify(this).split(" ")) {
+    final parser = EmojiParser();
+    final text = parser.unemojify(this);
+    if (!text.contains(':')) {
+      return false;
+    }
+
+    for (String s in text.split(" ")) {
       if (!s.startsWith(":") || !s.endsWith(":")) {
         return false;
+      } else {
+        final w = EmojiUtil.stripColons(s);
+        if (w != null) {
+          final emo = parser.getEmojiNamed(w);
+          if (emo == null) {
+            return false;
+          }
+        }
       }
     }
     return true;
+  }
+
+  String emojisa() {
+    if (!contains(':')) {
+      return this;
+    }
+    var text = this;
+    var emos = List<Emoji>.empty(growable: true);
+    final parser = EmojiParser();
+
+    for (String s in text.split(" ")) {
+      if (s.startsWith(":") && s.endsWith(":")) {
+        final w = EmojiUtil.stripColons(s);
+        if (w != null) {
+          final emo = parser.getEmojiNamed(w);
+          if (emo != null) {
+            emos.add(emo);
+          }
+        }
+      }
+    }
+
+    for (Emoji emo in emos) {
+      text = text.replaceAll(emo.full, emo.code);
+    }
+    return text;
   }
 
   bool get isUrl => Uri.tryParse(this)?.isAbsolute ?? false;
@@ -72,6 +112,8 @@ extension MessageTypes on MessageType {
   bool get isImage => this == MessageType.image;
 
   bool get isText => this == MessageType.text;
+
+  bool get isVoice => this == MessageType.voice;
 }
 
 extension ConnectionStates on ConnectionState {

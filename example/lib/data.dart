@@ -47,17 +47,18 @@ class Data {
       message: "That's fine",
       createdAt: DateTime.now(),
       sendBy: user1,
-      reaction: '❤️',
+      reaction: '❤️❤️❤️',
     ),
     Message(
       id: '6',
-      message: "https://bit.ly/3JHS2Wl",
+      message:
+          "https://stackoverflow.com/questions/27567846/how-can-i-check-out-a-github-pull-request-with-git?noredirect=1&lq=1",
       createdAt: DateTime.now(),
       sendBy: user1,
       replyMessage: ReplyMessage(
         message: "Can you write the time and place of the meeting?",
         replyTo: '1',
-        replyBy: '2',
+        replyBy: '3',
       ),
     ),
     Message(
@@ -86,6 +87,14 @@ class Data {
       message: "🤩🤩",
       createdAt: DateTime.now(),
       sendBy: user3,
+    ),
+    Message(
+      id: '11',
+      message: ":head:",
+      createdAt: DateTime.now(),
+      messageType: MessageType.text,
+      sendBy: user1,
+      reaction: '❤️',
     ),
   ];
 }

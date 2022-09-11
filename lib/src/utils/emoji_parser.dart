@@ -169,6 +169,13 @@ class EmojiParser {
     return _emojisByCode[EmojiUtil.stripNSM(emoji)] ?? Emoji.none;
   }
 
+  Emoji? getEmojiNamed(String emoji) {
+    if (!_emojisByName.keys.contains(emoji)) {
+      return null;
+    }
+    return _emojisByName[emoji];
+  }
+
   ///
   /// This method will unemojify the text containing the Unicode emoji symbols
   /// into emoji name.

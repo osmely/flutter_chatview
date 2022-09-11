@@ -20,14 +20,12 @@
  * SOFTWARE.
  */
 import 'package:chatview/chatview.dart';
-import 'package:chatview/src/models/reply_message.dart';
-import 'package:chatview/src/values/enumaration.dart';
+import 'package:chatview/src/extensions/extensions.dart';
 
 class Message {
   final String id;
   final String message;
   final DateTime createdAt;
-  //final String sendBy;
   final ChatUser sendBy;
   final ReplyMessage replyMessage;
   final String reaction;

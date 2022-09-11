@@ -19,13 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+// import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:chatview/chatview.dart';
 import 'package:flutter/material.dart';
-
 import 'package:chatview/src/extensions/extensions.dart';
-import 'package:chatview/src/models/models.dart';
-
 import '../utils/constants.dart';
-import '../values/typedefs.dart';
 import 'image_message_view.dart';
 import 'text_message_view.dart';
 import 'reaction_widget.dart';
@@ -65,6 +63,7 @@ class MessageView extends StatefulWidget {
 class _MessageViewState extends State<MessageView>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
+  // late final RecorderController recorderController;
 
   @override
   void initState() {
@@ -79,6 +78,8 @@ class _MessageViewState extends State<MessageView>
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) _animationController.reverse();
     });
+
+    // recorderController = RecorderController();
   }
 
   @override
@@ -105,9 +106,9 @@ class _MessageViewState extends State<MessageView>
                               EdgeInsets.fromLTRB(leftPadding2, 4, leftPadding2,
                                   widget.message.reaction.isNotEmpty ? 14 : 0),
                           child: Text(
-                            message,
+                            message.emojisa(),
                             style: emojiMessageConfiguration?.textStyle ??
-                                const TextStyle(fontSize: 30),
+                                const TextStyle(fontSize: 50),
                           ),
                         ),
                         if (widget.message.reaction.isNotEmpty)
@@ -118,29 +119,43 @@ class _MessageViewState extends State<MessageView>
                           ),
                       ],
                     )
-                  : widget.message.messageType.isImage
-                      ? ImageMessageView(
-                          message: widget.message,
-                          isMessageBySender: widget.isMessageBySender,
-                          imageMessageConfig: widget.imageMessageConfig,
-                          messageReactionConfig: widget.messageReactionConfig,
-                        )
-                      : TextMessageView(
-                          inComingChatBubbleConfig:
-                              widget.inComingChatBubbleConfig,
-                          outgoingChatBubbleConfig:
-                              widget.outgoingChatBubbleConfig,
-                          isMessageBySender: widget.isMessageBySender,
-                          message: widget.message,
-                          chatBubbleMaxWidth: widget.chatBubbleMaxWidth,
-                          messageReactionConfig: widget.messageReactionConfig,
-                        ),
+                  : contentMessage(),
             ),
           );
         },
         animation: _animationController,
       ),
     );
+  }
+
+  Widget contentMessage() {
+    switch (widget.message.messageType) {
+      case MessageType.image:
+        return ImageMessageView(
+          message: widget.message,
+          isMessageBySender: widget.isMessageBySender,
+          imageMessageConfig: widget.imageMessageConfig,
+          messageReactionConfig: widget.messageReactionConfig,
+        );
+      case MessageType.text:
+        return TextMessageView(
+          inComingChatBubbleConfig: widget.inComingChatBubbleConfig,
+          outgoingChatBubbleConfig: widget.outgoingChatBubbleConfig,
+          isMessageBySender: widget.isMessageBySender,
+          message: widget.message,
+          chatBubbleMaxWidth: widget.chatBubbleMaxWidth,
+          messageReactionConfig: widget.messageReactionConfig,
+        );
+
+      // case MessageType.voice:
+      //   return AudioWaveforms(
+      //     recorderController: recorderController,
+      //     size: Size(MediaQuery.of(context).size.width, 200.0),
+      //   );
+
+      default:
+        return Container();
+    }
   }
 
   void _onLongPressStart(LongPressStartDetails details) async {

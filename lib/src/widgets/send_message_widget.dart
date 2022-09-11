@@ -182,7 +182,7 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
                                           ],
                                         )
                                       : Text(
-                                          _replyMessage.message,
+                                          _replyMessage.message.emojisa(),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(

@@ -20,6 +20,7 @@ dependencies:
   html: ^0.15.0
   any_link_preview: ^2.0.9
   progress_indicators: ^1.0.0
+  #audio_waveforms: ^0.1.5
 
 dev_dependencies:
   flutter_test:
