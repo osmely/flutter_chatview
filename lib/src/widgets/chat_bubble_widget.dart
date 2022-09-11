@@ -39,8 +39,7 @@ class ChatBubbleWidget extends StatelessWidget {
     required this.chatController,
     required this.slideAnimation,
     required this.onSwipe,
-    required this.sender,
-    required this.receiver,
+    required this.currentUser,
     this.profileCircleConfig,
     this.chatBubbleConfig,
     this.repliedMessageConfig,
@@ -63,13 +62,12 @@ class ChatBubbleWidget extends StatelessWidget {
   final Animation<Offset> slideAnimation;
   final MessageConfiguration? messageConfig;
   final MessageCallBack onSwipe;
-  final ChatUser sender;
-  final ChatUser receiver;
+  final ChatUser currentUser;
   final ChatController chatController;
 
   String get replyMessage => message.replyMessage.message;
 
-  bool get isMessageBySender => message.sendBy == sender.id;
+  bool get isMessageBySender => message.sendBy.id == currentUser.id;
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +108,7 @@ class ChatBubbleWidget extends StatelessWidget {
                         ? profileCircleConfig?.bottomPadding ?? 15
                         : profileCircleConfig?.bottomPadding ?? 2,
                     profileCirclePadding: profileCircleConfig?.padding,
-                    imageUrl: profileCircleConfig?.profileImageUrl,
+                    imageUrl: message.sendBy.profilePhoto,
                     circleRadius: profileCircleConfig?.circleRadius,
                   ),
                 Expanded(
@@ -119,7 +117,7 @@ class ChatBubbleWidget extends StatelessWidget {
                           onLeftSwipe: () {
                             if (swipeToReplyConfig?.onLeftSwipe != null) {
                               swipeToReplyConfig?.onLeftSwipe!(
-                                  message.message, message.sendBy);
+                                  message.message, message.sendBy.id);
                             }
                             onSwipe(message);
                           },
@@ -132,7 +130,7 @@ class ChatBubbleWidget extends StatelessWidget {
                           onRightSwipe: () {
                             if (swipeToReplyConfig?.onRightSwipe != null) {
                               swipeToReplyConfig?.onRightSwipe!(
-                                  message.message, message.sendBy);
+                                  message.message, message.sendBy.id);
                             }
                             onSwipe(message);
                           },
@@ -162,8 +160,7 @@ class ChatBubbleWidget extends StatelessWidget {
               : ReplyMessageWidget(
                   message: message,
                   repliedMessageConfig: repliedMessageConfig,
-                  receiver: receiver,
-                  sender: sender,
+                  currentUser: currentUser,
                 ),
         MessageView(
           outgoingChatBubbleConfig: chatBubbleConfig?.outgoingChatBubbleConfig,

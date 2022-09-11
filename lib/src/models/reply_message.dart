@@ -25,12 +25,14 @@ class ReplyMessage {
   final String message;
   final String replyBy;
   final String replyTo;
+  final String replyToName;
   final MessageType messageType;
 
   ReplyMessage({
     this.message = '',
     this.replyTo = '',
     this.replyBy = '',
+    this.replyToName = '',
     this.messageType = MessageType.text,
   });
 
@@ -38,6 +40,7 @@ class ReplyMessage {
         message: json['message'],
         replyBy: json['replyBy'],
         replyTo: json['replyTo'],
+        replyToName: json['replyToName'],
         messageType: json["message_type"],
       );
 
@@ -45,6 +48,7 @@ class ReplyMessage {
         'message': message,
         'replyBy': replyBy,
         'replyTo': replyTo,
+        'replyToName': replyToName,
         'message_type': messageType,
       };
 }

@@ -38,8 +38,7 @@ import 'type_indicator_widget.dart';
 class ChatView extends StatefulWidget {
   const ChatView({
     Key? key,
-    required this.sender,
-    required this.receiver,
+    required this.currentUser,
     required this.chatController,
     this.onSendTap,
     this.showReceiverProfileCircle = true,
@@ -77,8 +76,7 @@ class ChatView extends StatefulWidget {
   final bool enablePagination;
   final Widget? loadingWidget;
   final bool? isLastPage;
-  final ChatUser sender;
-  final ChatUser receiver;
+  final ChatUser currentUser;
   final StringMessageCallBack? onSendTap;
   final ReplyMessageWithReturnWidget? sendMessageBuilder;
   final bool showTypingIndicator;
@@ -257,72 +255,74 @@ class _ChatViewState extends State<ChatView>
                                                                         chatBackgroundConfig
                                                                             .defaultGroupSeparatorConfig,
                                                                   ),
-                                                        indexedItemBuilder:
-                                                            (context, message,
-                                                                    index) =>
-                                                                ChatBubbleWidget(
-                                                          chatController:
-                                                              chatController,
-                                                          messageTimeTextStyle:
-                                                              chatBackgroundConfig
-                                                                  .messageTimeTextStyle,
-                                                          messageTimeIconColor:
-                                                              chatBackgroundConfig
-                                                                  .messageTimeIconColor,
-                                                          message: message,
-                                                          showReceiverProfileCircle:
-                                                              widget
-                                                                  .showReceiverProfileCircle,
-                                                          messageConfig: widget
-                                                              .messageConfig,
-                                                          chatBubbleConfig: widget
-                                                              .chatBubbleConfig,
-                                                          profileCircleConfig:
-                                                              widget
-                                                                  .profileCircleConfig,
-                                                          swipeToReplyConfig: widget
-                                                              .swipeToReplyConfig,
-                                                          repliedMessageConfig:
-                                                              widget
-                                                                  .repliedMessageConfig,
-                                                          horizontalDragToShowTime:
-                                                              horizontalDragToShowTime,
-                                                          slideAnimation:
-                                                              _slideAnimation,
-                                                          onLongPress:
-                                                              (yCoordinate,
-                                                                  xCoordinate) {
-                                                            _reactionPopupKey
-                                                                .currentState
-                                                                ?.refreshWidget(
-                                                              messageId:
-                                                                  message.id,
-                                                              xCoordinate:
-                                                                  xCoordinate,
-                                                              yCoordinate: yCoordinate <
-                                                                      0
-                                                                  ? -(yCoordinate) -
-                                                                      5
-                                                                  : yCoordinate,
-                                                            );
-                                                            _showReplyPopup(
-                                                              message: message,
-                                                              sendByCurrentUser:
-                                                                  message.sendBy ==
-                                                                      widget
-                                                                          .sender
-                                                                          .id,
-                                                            );
-                                                          },
-                                                          onSwipe: (message) =>
-                                                              _sendMessageKey
-                                                                  .currentState
-                                                                  ?.assignReplyMessage(
-                                                                      message),
-                                                          receiver:
-                                                              widget.receiver,
-                                                          sender: widget.sender,
-                                                        ),
+                                                        indexedItemBuilder: (context,
+                                                                message, index) =>
+                                                            ChatBubbleWidget(
+                                                                chatController:
+                                                                    chatController,
+                                                                messageTimeTextStyle:
+                                                                    chatBackgroundConfig
+                                                                        .messageTimeTextStyle,
+                                                                messageTimeIconColor:
+                                                                    chatBackgroundConfig
+                                                                        .messageTimeIconColor,
+                                                                message:
+                                                                    message,
+                                                                showReceiverProfileCircle:
+                                                                    widget
+                                                                        .showReceiverProfileCircle,
+                                                                messageConfig:
+                                                                    widget
+                                                                        .messageConfig,
+                                                                chatBubbleConfig:
+                                                                    widget
+                                                                        .chatBubbleConfig,
+                                                                profileCircleConfig:
+                                                                    widget
+                                                                        .profileCircleConfig,
+                                                                swipeToReplyConfig:
+                                                                    widget
+                                                                        .swipeToReplyConfig,
+                                                                repliedMessageConfig:
+                                                                    widget
+                                                                        .repliedMessageConfig,
+                                                                horizontalDragToShowTime:
+                                                                    horizontalDragToShowTime,
+                                                                slideAnimation:
+                                                                    _slideAnimation,
+                                                                onLongPress: (yCoordinate,
+                                                                    xCoordinate) {
+                                                                  _reactionPopupKey
+                                                                      .currentState
+                                                                      ?.refreshWidget(
+                                                                    messageId:
+                                                                        message
+                                                                            .id,
+                                                                    xCoordinate:
+                                                                        xCoordinate,
+                                                                    yCoordinate: yCoordinate <
+                                                                            0
+                                                                        ? -(yCoordinate) -
+                                                                            5
+                                                                        : yCoordinate,
+                                                                  );
+                                                                  _showReplyPopup(
+                                                                      message:
+                                                                          message,
+                                                                      sendByCurrentUser: message
+                                                                              .sendBy
+                                                                              .id ==
+                                                                          widget
+                                                                              .currentUser
+                                                                              .id);
+                                                                },
+                                                                onSwipe: (message) =>
+                                                                    _sendMessageKey
+                                                                        .currentState
+                                                                        ?.assignReplyMessage(
+                                                                            message),
+                                                                currentUser: widget
+                                                                    .currentUser),
                                                       )
                                                     : Center(
                                                         child: chatBackgroundConfig
@@ -341,8 +341,8 @@ class _ChatViewState extends State<ChatView>
                                             .chatBubbleConfig
                                             ?.inComingChatBubbleConfig,
                                         showIndicator: showTypingIndicator,
-                                        profilePic: widget.profileCircleConfig
-                                            ?.profileImageUrl,
+                                        profilePic:
+                                            widget.currentUser.profilePhoto,
                                       ),
                                       SizedBox(
                                         height:
@@ -367,8 +367,7 @@ class _ChatViewState extends State<ChatView>
                   sendMessageConfig: widget.sendMessageConfig,
                   backgroundColor: chatBackgroundConfig.backgroundColor,
                   onSendTap: _onSendTap,
-                  receiver: widget.receiver,
-                  sender: widget.sender,
+                  currentUser: widget.currentUser,
                   onReplyCallback: (reply) =>
                       setState(() => replyMessage = reply),
                   onReplyCloseCallback: () =>

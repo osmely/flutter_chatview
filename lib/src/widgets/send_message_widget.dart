@@ -35,16 +35,14 @@ class SendMessageWidget extends StatefulWidget {
     Key? key,
     required this.onSendTap,
     this.sendMessageConfig,
-    required this.sender,
-    required this.receiver,
+    required this.currentUser,
     this.backgroundColor,
     this.sendMessageBuilder,
     this.onReplyCallback,
     this.onReplyCloseCallback,
   }) : super(key: key);
   final StringMessageCallBack onSendTap;
-  final ChatUser sender;
-  final ChatUser receiver;
+  final ChatUser currentUser;
   final SendMessageConfiguration? sendMessageConfig;
   final Color? backgroundColor;
   final ReplyMessageWithReturnWidget? sendMessageBuilder;
@@ -60,9 +58,9 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
   ReplyMessage _replyMessage = ReplyMessage();
   final _focusNode = FocusNode();
 
-  String get _replyTo => _replyMessage.replyTo == widget.sender.id
+  String get _replyTo => _replyMessage.replyTo == widget.currentUser.id
       ? PackageStrings.you
-      : widget.receiver.name;
+      : _replyMessage.replyToName;
 
   @override
   Widget build(BuildContext context) {
@@ -228,8 +226,9 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
     setState(() {
       _replyMessage = ReplyMessage(
         message: message.message,
-        replyBy: widget.sender.id,
-        replyTo: message.sendBy,
+        replyBy: widget.currentUser.id,
+        replyTo: message.sendBy.id,
+        replyToName: message.sendBy.name,
         messageType: message.messageType,
       );
     });
