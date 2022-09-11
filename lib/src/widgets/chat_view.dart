@@ -156,7 +156,7 @@ class _ChatViewState extends State<ChatView>
         color: chatBackgroundConfig.backgroundColor ?? Colors.white,
         image: chatBackgroundConfig.backgroundImage != null
             ? DecorationImage(
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
                 image: NetworkImage(chatBackgroundConfig.backgroundImage!),
               )
             : null,

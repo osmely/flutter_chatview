@@ -14,7 +14,7 @@ class AppTheme {
 
   final Color? inComingChatBubbleTextColor;
   final Color? repliedMessageColor;
-  final Color? repliedTitleTextColor;
+
   final Color? textFieldTextColor;
 
   final Color? closeIconColor;
@@ -50,51 +50,53 @@ class AppTheme {
   final TextStyle? outgoingChatLinkTitleStyle;
   final TextStyle? outgoingChatLinkBodyStyle;
   final TextStyle? incomingChatLinkBodyStyle;
+  final TextStyle? incomingChatSenderNameStyle;
+  final TextStyle? replyTitleTextStyle;
 
-  AppTheme({
-    this.flashingCircleDarkColor,
-    this.flashingCircleBrightColor,
-    this.outgoingChatLinkBodyStyle,
-    this.incomingChatLinkBodyStyle,
-    this.incomingChatLinkTitleStyle,
-    this.outgoingChatLinkTitleStyle,
-    this.linkPreviewOutgoingChatColor,
-    this.linkPreviewIncomingChatColor,
-    this.linkPreviewIncomingTitleStyle,
-    this.linkPreviewOutgoingTitleStyle,
-    this.repliedTitleTextColor,
-    this.swipeToReplyIconColor,
-    this.textFieldTextColor,
-    this.reactionPopupColor,
-    this.replyPopupButtonColor,
-    this.replyPopupTopBorderColor,
-    this.reactionPopupTitleColor,
-    this.appBarColor,
-    this.backArrowColor,
-    this.backgroundColor,
-    this.replyDialogColor,
-    this.replyTitleColor,
-    this.textFieldBackgroundColor,
-    this.outgoingChatBubbleColor,
-    this.inComingChatBubbleColor,
-    this.inComingChatBubbleTextColor,
-    this.repliedMessageColor,
-    this.closeIconColor,
-    this.shareIconBackgroundColor,
-    this.sendButtonColor,
-    this.replyMessageColor,
-    this.appBarTitleTextStyle,
-    this.messageReactionBackGroundColor,
-    this.messageReactionBorderColor,
-    this.verticalBarColor,
-    this.chatHeaderColor,
-    this.themeIconColor,
-    this.shareIconColor,
-    this.elevation,
-    this.messageTimeIconColor,
-    this.messageTimeTextColor,
-    this.replyPopupColor,
-  });
+  AppTheme(
+      {this.flashingCircleDarkColor,
+      this.flashingCircleBrightColor,
+      this.outgoingChatLinkBodyStyle,
+      this.incomingChatLinkBodyStyle,
+      this.incomingChatLinkTitleStyle,
+      this.outgoingChatLinkTitleStyle,
+      this.linkPreviewOutgoingChatColor,
+      this.linkPreviewIncomingChatColor,
+      this.linkPreviewIncomingTitleStyle,
+      this.linkPreviewOutgoingTitleStyle,
+      this.replyTitleTextStyle,
+      this.swipeToReplyIconColor,
+      this.textFieldTextColor,
+      this.reactionPopupColor,
+      this.replyPopupButtonColor,
+      this.replyPopupTopBorderColor,
+      this.reactionPopupTitleColor,
+      this.appBarColor,
+      this.backArrowColor,
+      this.backgroundColor,
+      this.replyDialogColor,
+      this.replyTitleColor,
+      this.textFieldBackgroundColor,
+      this.outgoingChatBubbleColor,
+      this.inComingChatBubbleColor,
+      this.inComingChatBubbleTextColor,
+      this.repliedMessageColor,
+      this.closeIconColor,
+      this.shareIconBackgroundColor,
+      this.sendButtonColor,
+      this.replyMessageColor,
+      this.appBarTitleTextStyle,
+      this.messageReactionBackGroundColor,
+      this.messageReactionBorderColor,
+      this.verticalBarColor,
+      this.chatHeaderColor,
+      this.themeIconColor,
+      this.shareIconColor,
+      this.elevation,
+      this.messageTimeIconColor,
+      this.messageTimeTextColor,
+      this.replyPopupColor,
+      this.incomingChatSenderNameStyle});
 }
 
 class DarkTheme extends AppTheme {
@@ -106,7 +108,8 @@ class DarkTheme extends AppTheme {
     TextStyle outgoingChatLinkBodyStyle = const TextStyle(color: Colors.white),
     TextStyle incomingChatLinkBodyStyle = const TextStyle(color: Colors.white),
     double elevation = 1,
-    Color repliedTitleTextColor = Colors.white,
+    TextStyle replyTitleTextStyle =
+        const TextStyle(color: Colors.grey, fontSize: 16),
     Color? swipeToReplyIconColor = Colors.white,
     Color textFieldTextColor = Colors.white,
     Color appBarColor = const Color(0xff1d1b25),
@@ -117,6 +120,8 @@ class DarkTheme extends AppTheme {
     Color linkPreviewIncomingChatColor = const Color(0xff9f85ff),
     TextStyle linkPreviewIncomingTitleStyle = const TextStyle(),
     TextStyle linkPreviewOutgoingTitleStyle = const TextStyle(),
+    TextStyle incomingChatSenderNameStyle =
+        const TextStyle(color: Colors.grey, fontSize: 12),
     Color replyTitleColor = Colors.white,
     Color textFieldBackgroundColor = const Color(0xff383152),
     Color outgoingChatBubbleColor = const Color(0xff9f85ff),
@@ -167,7 +172,7 @@ class DarkTheme extends AppTheme {
           messageTimeIconColor: messageTimeIconColor,
           messageTimeTextColor: messageTimeTextColor,
           textFieldTextColor: textFieldTextColor,
-          repliedTitleTextColor: repliedTitleTextColor,
+          replyTitleTextStyle: replyTitleTextStyle,
           swipeToReplyIconColor: swipeToReplyIconColor,
           reactionPopupColor: reactionPopupColor,
           replyPopupColor: replyPopupColor,
@@ -184,6 +189,7 @@ class DarkTheme extends AppTheme {
           outgoingChatLinkTitleStyle: outgoingChatLinkTitleStyle,
           flashingCircleDarkColor: flashingCircleDarkColor,
           flashingCircleBrightColor: flashingCircleBrightColor,
+          incomingChatSenderNameStyle: incomingChatSenderNameStyle,
         );
 }
 
@@ -207,6 +213,10 @@ class LightTheme extends AppTheme {
     Color linkPreviewIncomingChatColor = const Color(0xFFEEEEEE),
     TextStyle linkPreviewIncomingTitleStyle = const TextStyle(),
     TextStyle linkPreviewOutgoingTitleStyle = const TextStyle(),
+    TextStyle incomingChatSenderNameStyle =
+        const TextStyle(color: Colors.grey, fontSize: 12),
+    TextStyle replyTitleTextStyle =
+        const TextStyle(color: Colors.grey, fontSize: 16),
     Color replyTitleColor = const Color(0xffEE5366),
     Color reactionPopupColor = Colors.white,
     Color replyPopupColor = Colors.white,
@@ -258,7 +268,7 @@ class LightTheme extends AppTheme {
           messageTimeIconColor: messageTimeIconColor,
           messageTimeTextColor: messageTimeTextColor,
           textFieldTextColor: textFieldTextColor,
-          repliedTitleTextColor: repliedTitleTextColor,
+          replyTitleTextStyle: replyTitleTextStyle,
           swipeToReplyIconColor: swipeToReplyIconColor,
           replyPopupColor: replyPopupColor,
           replyPopupButtonColor: replyPopupButtonColor,
@@ -274,5 +284,6 @@ class LightTheme extends AppTheme {
           outgoingChatLinkTitleStyle: outgoingChatLinkTitleStyle,
           flashingCircleDarkColor: flashingCircleDarkColor,
           flashingCircleBrightColor: flashingCircleBrightColor,
+          incomingChatSenderNameStyle: incomingChatSenderNameStyle,
         );
 }

@@ -162,6 +162,14 @@ class ChatBubbleWidget extends StatelessWidget {
                   repliedMessageConfig: repliedMessageConfig,
                   currentUser: currentUser,
                 ),
+        if (replyMessage.isEmpty && !isMessageBySender)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 8.0, 4),
+            child: Text(message.sendBy.name,
+                style: chatBubbleConfig
+                        ?.inComingChatBubbleConfig?.usernameTextStyle ??
+                    const TextStyle(fontSize: 10, color: Colors.grey)),
+          ),
         MessageView(
           outgoingChatBubbleConfig: chatBubbleConfig?.outgoingChatBubbleConfig,
           inComingChatBubbleConfig: chatBubbleConfig?.inComingChatBubbleConfig,

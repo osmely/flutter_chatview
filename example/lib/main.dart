@@ -82,6 +82,8 @@ class _ChatScreenState extends State<ChatScreen> {
           ],
         ),
         chatBackgroundConfig: ChatBackgroundConfiguration(
+          backgroundImage:
+              'https://img-cdn.herbeauty.co/wp-content/uploads/2019/06/best-wives-according-to-zodiac-01.jpg',
           messageTimeIconColor: theme.messageTimeIconColor,
           messageTimeTextStyle: TextStyle(color: theme.messageTimeTextColor),
           defaultGroupSeparatorConfig: DefaultGroupSeparatorConfiguration(
@@ -102,6 +104,7 @@ class _ChatScreenState extends State<ChatScreen> {
           textStyle: TextStyle(color: theme.textFieldTextColor),
         ),
         chatBubbleConfig: ChatBubbleConfiguration(
+          onDoubleTap: (message) {},
           outgoingChatBubbleConfig: ChatBubble(
             linkPreviewConfig: LinkPreviewConfiguration(
               backgroundColor: theme.linkPreviewOutgoingChatColor,
@@ -111,6 +114,7 @@ class _ChatScreenState extends State<ChatScreen> {
             color: theme.outgoingChatBubbleColor,
           ),
           inComingChatBubbleConfig: ChatBubble(
+            usernameTextStyle: theme.incomingChatSenderNameStyle,
             linkPreviewConfig: LinkPreviewConfiguration(
               linkStyle: TextStyle(
                 color: theme.inComingChatBubbleTextColor,
@@ -158,7 +162,7 @@ class _ChatScreenState extends State<ChatScreen> {
             fontWeight: FontWeight.bold,
             letterSpacing: 0.25,
           ),
-          replyTitleTextStyle: TextStyle(color: theme.repliedTitleTextColor),
+          replyTitleTextStyle: theme.replyTitleTextStyle,
         ),
         swipeToReplyConfig: SwipeToReplyConfiguration(
           replyIconColor: theme.swipeToReplyIconColor,

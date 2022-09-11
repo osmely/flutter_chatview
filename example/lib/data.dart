@@ -20,14 +20,24 @@ class Data {
     profilePhoto: Data.profileImage,
   );
 
+  final yesterday = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+
   static const profileImage =
       "https://raw.githubusercontent.com/SimformSolutionsPvtLtd/flutter_showcaseview/master/example/assets/simform.png";
   static final messageList = [
-    Message(id: '1', message: "Hi!", createdAt: DateTime.now(), sendBy: user1),
+    Message(
+      id: '1',
+      message: "Hi!",
+      createdAt: DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day - 4),
+      sendBy: user1,
+    ),
     Message(
       id: '2',
       message: "Hi!",
-      createdAt: DateTime.now(),
+      createdAt: DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day - 1),
       sendBy: user2,
     ),
     Message(
@@ -51,8 +61,7 @@ class Data {
     ),
     Message(
       id: '6',
-      message:
-          "https://stackoverflow.com/questions/27567846/how-can-i-check-out-a-github-pull-request-with-git?noredirect=1&lq=1",
+      message: "mmmmmm",
       createdAt: DateTime.now(),
       sendBy: user1,
       replyMessage: ReplyMessage(
