@@ -63,14 +63,17 @@ class ChatBubbleWidget extends StatelessWidget {
   final MessageConfiguration? messageConfig;
   final MessageCallBack onSwipe;
   final ChatUser currentUser;
+
   final ChatController chatController;
 
   String get replyMessage => message.replyMessage.message;
 
-  bool get isMessageBySender => message.sendBy.id == currentUser.id;
+  bool get isMessageBySender => message.sendById == currentUser.id;
 
   @override
   Widget build(BuildContext context) {
+    ChatUser senderUser = chatController.userById(message.sendById);
+
     return Stack(
       children: [
         if (horizontalDragToShowTime)
@@ -108,7 +111,7 @@ class ChatBubbleWidget extends StatelessWidget {
                         ? profileCircleConfig?.bottomPadding ?? 15
                         : profileCircleConfig?.bottomPadding ?? 2,
                     profileCirclePadding: profileCircleConfig?.padding,
-                    imageUrl: message.sendBy.profilePhoto,
+                    imageUrl: senderUser.profilePhoto,
                     circleRadius: profileCircleConfig?.circleRadius,
                   ),
                 Expanded(
@@ -117,27 +120,27 @@ class ChatBubbleWidget extends StatelessWidget {
                           onLeftSwipe: () {
                             if (swipeToReplyConfig?.onLeftSwipe != null) {
                               swipeToReplyConfig?.onLeftSwipe!(
-                                  message.message, message.sendBy.id);
+                                  message.message, message.sendById);
                             }
                             onSwipe(message);
                           },
                           replyIconColor: swipeToReplyConfig?.replyIconColor,
                           swipeToReplyAnimationDuration:
                               swipeToReplyConfig?.animationDuration,
-                          child: _messagesWidgetColumn,
+                          child: _messagesWidgetColumn(senderUser),
                         )
                       : SwipeToReply(
                           onRightSwipe: () {
                             if (swipeToReplyConfig?.onRightSwipe != null) {
                               swipeToReplyConfig?.onRightSwipe!(
-                                  message.message, message.sendBy.id);
+                                  message.message, message.sendById);
                             }
                             onSwipe(message);
                           },
                           replyIconColor: swipeToReplyConfig?.replyIconColor,
                           swipeToReplyAnimationDuration:
                               swipeToReplyConfig?.animationDuration,
-                          child: _messagesWidgetColumn,
+                          child: _messagesWidgetColumn(senderUser),
                         ),
                 ),
               ],
@@ -148,7 +151,7 @@ class ChatBubbleWidget extends StatelessWidget {
     );
   }
 
-  Widget get _messagesWidgetColumn {
+  Widget _messagesWidgetColumn(ChatUser senderUser) {
     return Column(
       crossAxisAlignment:
           isMessageBySender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -165,7 +168,7 @@ class ChatBubbleWidget extends StatelessWidget {
         if (replyMessage.isEmpty && !isMessageBySender)
           Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 0, 8.0, 4),
-            child: Text(message.sendBy.name,
+            child: Text(senderUser.name,
                 style: chatBubbleConfig
                         ?.inComingChatBubbleConfig?.usernameTextStyle ??
                     const TextStyle(fontSize: 10, color: Colors.grey)),

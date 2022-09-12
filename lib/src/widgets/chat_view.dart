@@ -83,7 +83,6 @@ class ChatView extends StatefulWidget {
   final TypeIndicatorConfiguration? typeIndicatorConfig;
   final ChatController chatController;
   final SendMessageConfiguration? sendMessageConfig;
-
   final Widget? appBar;
 
   @override
@@ -256,7 +255,8 @@ class _ChatViewState extends State<ChatView>
                                                                             .defaultGroupSeparatorConfig,
                                                                   ),
                                                         indexedItemBuilder: (context,
-                                                                message, index) =>
+                                                                message,
+                                                                index) =>
                                                             ChatBubbleWidget(
                                                                 chatController:
                                                                     chatController,
@@ -268,24 +268,18 @@ class _ChatViewState extends State<ChatView>
                                                                         .messageTimeIconColor,
                                                                 message:
                                                                     message,
-                                                                showReceiverProfileCircle:
-                                                                    widget
-                                                                        .showReceiverProfileCircle,
-                                                                messageConfig:
-                                                                    widget
-                                                                        .messageConfig,
-                                                                chatBubbleConfig:
-                                                                    widget
-                                                                        .chatBubbleConfig,
-                                                                profileCircleConfig:
-                                                                    widget
-                                                                        .profileCircleConfig,
-                                                                swipeToReplyConfig:
-                                                                    widget
-                                                                        .swipeToReplyConfig,
-                                                                repliedMessageConfig:
-                                                                    widget
-                                                                        .repliedMessageConfig,
+                                                                showReceiverProfileCircle: widget
+                                                                    .showReceiverProfileCircle,
+                                                                messageConfig: widget
+                                                                    .messageConfig,
+                                                                chatBubbleConfig: widget
+                                                                    .chatBubbleConfig,
+                                                                profileCircleConfig: widget
+                                                                    .profileCircleConfig,
+                                                                swipeToReplyConfig: widget
+                                                                    .swipeToReplyConfig,
+                                                                repliedMessageConfig: widget
+                                                                    .repliedMessageConfig,
                                                                 horizontalDragToShowTime:
                                                                     horizontalDragToShowTime,
                                                                 slideAnimation:
@@ -310,19 +304,17 @@ class _ChatViewState extends State<ChatView>
                                                                       message:
                                                                           message,
                                                                       sendByCurrentUser: message
-                                                                              .sendBy
-                                                                              .id ==
+                                                                              .sendById ==
                                                                           widget
                                                                               .currentUser
                                                                               .id);
                                                                 },
-                                                                onSwipe: (message) =>
-                                                                    _sendMessageKey
-                                                                        .currentState
-                                                                        ?.assignReplyMessage(
-                                                                            message),
-                                                                currentUser: widget
-                                                                    .currentUser),
+                                                                onSwipe: (message) => _sendMessageKey
+                                                                    .currentState
+                                                                    ?.assignReplyMessage(
+                                                                        message,
+                                                                        chatController.userById(message.sendById)),
+                                                                currentUser: widget.currentUser),
                                                       )
                                                     : Center(
                                                         child: chatBackgroundConfig
@@ -361,17 +353,19 @@ class _ChatViewState extends State<ChatView>
                         ],
                       )
                     : const SizedBox(),
-                SendMessageWidget(
-                  key: _sendMessageKey,
-                  sendMessageBuilder: widget.sendMessageBuilder,
-                  sendMessageConfig: widget.sendMessageConfig,
-                  backgroundColor: chatBackgroundConfig.backgroundColor,
-                  onSendTap: _onSendTap,
-                  currentUser: widget.currentUser,
-                  onReplyCallback: (reply) =>
-                      setState(() => replyMessage = reply),
-                  onReplyCloseCallback: () =>
-                      setState(() => replyMessage = ReplyMessage()),
+                SafeArea(
+                  child: SendMessageWidget(
+                    key: _sendMessageKey,
+                    sendMessageBuilder: widget.sendMessageBuilder,
+                    sendMessageConfig: widget.sendMessageConfig,
+                    backgroundColor: chatBackgroundConfig.backgroundColor,
+                    onSendTap: _onSendTap,
+                    currentUser: widget.currentUser,
+                    onReplyCallback: (reply) =>
+                        setState(() => replyMessage = reply),
+                    onReplyCloseCallback: () =>
+                        setState(() => replyMessage = ReplyMessage()),
+                  ),
                 ),
               ],
             ),
@@ -449,7 +443,8 @@ class _ChatViewState extends State<ChatView>
                       }
                     },
                     onReplyTap: () {
-                      _sendMessageKey.currentState?.assignReplyMessage(message);
+                      _sendMessageKey.currentState?.assignReplyMessage(
+                          message, chatController.userById(message.sendById));
                       setState(() => showPopUp = false);
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
                       if (replyPopup?.onReplyTap != null) {

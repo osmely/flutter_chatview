@@ -77,16 +77,16 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
               width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
-                  Positioned(
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height /
-                          ((!kIsWeb && Platform.isIOS) ? 24 : 28),
-                      color: widget.backgroundColor ?? Colors.white,
-                    ),
-                  ),
+                  // Positioned(
+                  //   right: 0,
+                  //   left: 0,
+                  //   bottom: 0,
+                  //   child: Container(
+                  //     height: MediaQuery.of(context).size.height /
+                  //         ((!kIsWeb && Platform.isIOS) ? 24 : 28),
+                  //     color: widget.backgroundColor ?? Colors.white,
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(
                       bottomPadding4,
@@ -222,13 +222,13 @@ class SendMessageWidgetState extends State<SendMessageWidget> {
     }
   }
 
-  void assignReplyMessage(Message message) {
+  void assignReplyMessage(Message message, ChatUser sender) {
     setState(() {
       _replyMessage = ReplyMessage(
         message: message.message,
         replyBy: widget.currentUser.id,
-        replyTo: message.sendBy.id,
-        replyToName: message.sendBy.name,
+        replyTo: message.sendById,
+        replyToName: sender.name,
         messageType: message.messageType,
       );
     });

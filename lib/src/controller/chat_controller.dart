@@ -24,14 +24,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
+import '../values/typedefs.dart';
 
 class ChatController {
   List<Message> initialMessageList;
   ScrollController scrollController;
+  final UserByIdCallBack userById;
 
   ChatController({
     required this.initialMessageList,
     required this.scrollController,
+    required this.userById,
   });
 
   StreamController<List<Message>> messageStreamController = StreamController();
@@ -51,7 +54,7 @@ class ChatController {
       id: messageId,
       message: message.message,
       createdAt: message.createdAt,
-      sendBy: message.sendBy,
+      sendById: message.sendById,
       replyMessage: message.replyMessage,
       reaction: emoji,
       messageType: message.messageType,

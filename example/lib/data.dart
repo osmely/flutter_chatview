@@ -20,8 +20,10 @@ class Data {
     profilePhoto: Data.profileImage,
   );
 
-  final yesterday = DateTime(
-      DateTime.now().year, DateTime.now().month, DateTime.now().day - 1);
+  static final currentUser =
+      ChatUser(id: '2', name: 'Simform', profilePhoto: Data.profileImage);
+
+  static List<ChatUser> allUsers = [currentUser, user1, user2, user3];
 
   static const profileImage =
       "https://raw.githubusercontent.com/SimformSolutionsPvtLtd/flutter_showcaseview/master/example/assets/simform.png";
@@ -31,39 +33,39 @@ class Data {
       message: "Hi!",
       createdAt: DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day - 4),
-      sendBy: user1,
+      sendById: user1.id,
     ),
     Message(
       id: '2',
       message: "Hi!",
       createdAt: DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day - 1),
-      sendBy: user2,
+      sendById: user2.id,
     ),
     Message(
       id: '3',
       message: "We can meet?I am free",
       createdAt: DateTime.now(),
-      sendBy: user1,
+      sendById: user1.id,
     ),
     Message(
       id: '4',
       message: "Can you write the time and place of the meeting?",
       createdAt: DateTime.now(),
-      sendBy: user2,
+      sendById: user2.id,
     ),
     Message(
       id: '5',
       message: "That's fine",
       createdAt: DateTime.now(),
-      sendBy: user1,
+      sendById: user1.id,
       reaction: '❤️❤️❤️',
     ),
     Message(
       id: '6',
       message: "mmmmmm",
       createdAt: DateTime.now(),
-      sendBy: user1,
+      sendById: user1.id,
       replyMessage: ReplyMessage(
         message: "Can you write the time and place of the meeting?",
         replyTo: '1',
@@ -74,35 +76,35 @@ class Data {
       id: '7',
       message: "Done",
       createdAt: DateTime.now(),
-      sendBy: user2,
+      sendById: user2.id,
     ),
     Message(
       id: '8',
       message: "Thank you!!",
       createdAt: DateTime.now(),
-      sendBy: user1,
+      sendById: user1.id,
     ),
     Message(
       id: '9',
       message:
-          "https://bs-uploads.toptal.io/blackfish-uploads/components/seo/content/og_image_file/og_image/777695/0408-FlutterMessangerDemo-Luke_Social-e8a0e8ddab86b503a125ebcad823c583.png",
+          "https://cdn.pixabay.com/photo/2017/11/04/13/43/texture-2917553_1280.jpg",
       createdAt: DateTime.now(),
       messageType: MessageType.image,
-      sendBy: user1,
+      sendById: user1.id,
       reaction: '❤️',
     ),
     Message(
       id: '10',
       message: "🤩🤩",
       createdAt: DateTime.now(),
-      sendBy: user3,
+      sendById: user3.id,
     ),
     Message(
       id: '11',
       message: ":head:",
       createdAt: DateTime.now(),
       messageType: MessageType.text,
-      sendBy: user1,
+      sendById: user1.id,
       reaction: '❤️',
     ),
   ];

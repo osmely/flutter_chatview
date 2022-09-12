@@ -36,19 +36,18 @@ class _ChatScreenState extends State<ChatScreen> {
   AppTheme theme = LightTheme();
   bool isDarkTheme = false;
 
-  final currentUser =
-      ChatUser(id: '2', name: 'Simform', profilePhoto: Data.profileImage);
-
   final _chatController = ChatController(
-    initialMessageList: Data.messageList,
-    scrollController: ScrollController(),
-  );
+      initialMessageList: Data.messageList,
+      scrollController: ScrollController(),
+      userById: (String userId) {
+        return Data.allUsers.firstWhere((element) => element.id == userId);
+      });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ChatView(
-        currentUser: currentUser,
+        currentUser: Data.currentUser,
         chatController: _chatController,
         onSendTap: _onSendTap,
         typeIndicatorConfig: TypeIndicatorConfiguration(
@@ -178,7 +177,7 @@ class _ChatScreenState extends State<ChatScreen> {
         id: id.toString(),
         createdAt: DateTime.now(),
         message: message,
-        sendBy: currentUser,
+        sendById: Data.currentUser.id,
         replyMessage: replyMessage,
       ),
     );

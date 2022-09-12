@@ -20,13 +20,12 @@
  * SOFTWARE.
  */
 import 'package:chatview/chatview.dart';
-import 'package:chatview/src/extensions/extensions.dart';
 
 class Message {
   final String id;
   final String message;
   final DateTime createdAt;
-  final ChatUser sendBy;
+  final String sendById;
   final ReplyMessage replyMessage;
   final String reaction;
   final MessageType messageType;
@@ -35,7 +34,7 @@ class Message {
     this.id = '',
     required this.message,
     required this.createdAt,
-    required this.sendBy,
+    required this.sendById,
     ReplyMessage? replyMessage,
     this.reaction = '',
     this.messageType = MessageType.text,
@@ -45,8 +44,7 @@ class Message {
         id: json["id"],
         message: json["message"],
         createdAt: json["createdAt"],
-        sendBy: ChatUser.fromJson(json["sendBy"]),
-        //json["sendBy"],//Message.fromJson(json["sendBy"]), //ReplyMessage.fromJson(json["reply_message"]),
+        sendById: json["sendById"],
         replyMessage: ReplyMessage.fromJson(json["reply_message"]),
         reaction: json["reaction"] ?? '',
         messageType: json["message_type"],
@@ -56,7 +54,7 @@ class Message {
         'id': id,
         'message': message,
         'createdAt': createdAt,
-        'sendBy': sendBy,
+        'sendById': sendById,
         'reply_message': replyMessage.toJson(),
         'reaction': reaction,
         'message_type': messageType,

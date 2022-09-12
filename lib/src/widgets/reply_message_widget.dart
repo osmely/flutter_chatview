@@ -45,7 +45,7 @@ class ReplyMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final replyMessage = message.replyMessage.message.emojisa();
+    final replyMessage = message.replyMessage.message;
     final replyBy = _replyBySender ? PackageStrings.you : currentUser.name;
     return Container(
       margin: repliedMessageConfig?.margin ??

@@ -99,6 +99,17 @@ class ImageMessageView extends StatelessWidget {
                               ),
                             );
                           },
+                          errorBuilder: (context, object, trace) {
+                            return Container(
+                              color: Colors.black,
+                              child: const Center(
+                                  child: Icon(
+                                Icons.error_outline,
+                                size: 80,
+                                color: Colors.white,
+                              )),
+                            );
+                          },
                         ),
                 ),
               ),
