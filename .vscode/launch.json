@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "flutter_chatview_orig",
+            "name": "chatview",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "flutter_chatview_orig (profile mode)",
+            "name": "chatview (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "flutter_chatview_orig (release mode)",
+            "name": "chatview (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
